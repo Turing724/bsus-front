@@ -1,33 +1,43 @@
 <template>
   <div id="Article">
     <div class="container">
-      <div class="main">123</div>
-      <div class="aside">
-        <Aside></Aside>
-      </div>
+      <h2 class="title">{{ dataSource.title }}</h2>
+      <div class="content markdown-body" v-html="dataSource.content"></div>
     </div>
   </div>
 </template>
 
 <script>
-import Aside from "../components/Aside";
+import "github-markdown-css";
+import "highlight.js/styles/github.css";
+
 export default {
   name: "Article",
-  components: { Aside }
+  data() {
+    return {
+      dataSource: {}
+    };
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      let res = await this.$http(`/article/${this.$route.params.id}`);
+      this.dataSource = Object.assign({}, res.result.data);
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-.container {
-  width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  .main {
-    flex: 1;
-    margin-right: 30px;
-    background-color: #fff;
-  }
-  .aside {
-    width: 280px;
-  }
+.title {
+  font-size: 26px;
+  margin: 30px 0 25px;
+  width: 100%;
+  padding-left: 20px;
+}
+
+.content {
+  padding: 10px 20px;
 }
 </style>
