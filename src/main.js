@@ -15,5 +15,8 @@ new Vue({
   el: "#app",
   router,
   components: { App },
-  template: "<App/>"
+  template: "<App/>",
+  created() {
+    document.title = "BSUS | Baishiup's Blog";
+  }
 });

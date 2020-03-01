@@ -12,7 +12,7 @@ axios.interceptors.response.use(
     return res.data;
   },
   err => {
-    console.log(err.response);
+    console.log(err, err.response);
     return err.response.data;
   }
 );

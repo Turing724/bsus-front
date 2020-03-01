@@ -36,18 +36,10 @@ export default {
 .main {
   width: 60%;
   margin-left: 40%;
-  padding-top: 60px;
+  padding-top: 50px;
 }
 .header {
   width: 60%;
   margin-left: 40%;
-  height: 60px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #fff;
-  border-bottom: 1px solid #f5f5f5;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  z-index: 100;
 }
 </style>
