@@ -1,3 +1,6 @@
+// dev
+let isDev = /^(192\.168|localhost)/.test(window.location.host);
+
 export default {
-  host: "http://localhost:7001"
+  host: isDev ? "http://localhost:7001" : "api.baishiup.com"
 };
