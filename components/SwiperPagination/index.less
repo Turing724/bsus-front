@@ -1,0 +1,25 @@
+.dots-box {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .dot {
+    width: 15px;
+    height: 2px;
+    margin: 0 3px;
+    border: 0 solid rgba(255, 255, 255, 0.3);
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &.active {
+      width: 30px;
+      border-color: #fff;
+      background-color: #fff;
+    }
+  }
+}

@@ -1,0 +1,132 @@
+#Index {
+  .swiper {
+    width: 100%;
+    position: relative;
+    .swiper-item {
+      height: 490px;
+      background-color: #212731;
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      color: #fff;
+      .pic {
+        width: 67%;
+        height: 100%;
+        flex-shrink: 0;
+        overflow: hidden;
+        & > div {
+          width: 100%;
+          height: 100%;
+          transform: rotate(0);
+          transition: all 0.2s ease-in-out;
+          background-color: #eee;
+          background-position: center;
+          background-size: cover;
+          &:hover {
+            transform: rotate(-2deg);
+            width: 105%;
+          }
+        }
+      }
+      .content {
+        height: 100%;
+        flex: 1;
+        padding: 48px;
+        min-width: 0;
+        position: relative;
+        box-sizing: border-box;
+        h2 {
+          cursor: pointer;
+          margin-top: 108px;
+          margin-bottom: 24px;
+          font-size: 18px;
+          font-weight: 500;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          transition: all 0.2s ease-in-out;
+          &:hover {
+            color: #448ef6;
+          }
+        }
+        p {
+          font-weight: 400;
+          font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+      .foot {
+        position: absolute;
+        bottom: 48px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        color: #f2f2f5;
+        .separator {
+          display: inline-block;
+          width: 12px;
+          margin: 0 8px;
+          height: 1px;
+          background-color: #448ef6;
+        }
+      }
+    }
+  }
+  .container {
+    padding: 24px 0 48px 0;
+    display: flex;
+    .main {
+      flex: 1;
+      overflow: hidden;
+      .category {
+        display: flex;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+        .category-item {
+          height: 30px;
+          line-height: 30px;
+          font-size: 12px;
+          padding: 0 12px;
+          margin-right: 5px;
+          cursor: pointer;
+          border-radius: 3px;
+          position: relative;
+          transition: all 0.2s ease-in-out;
+          &:hover {
+            color: #448ef6;
+          }
+          &.active {
+            color: #fff;
+            background-color: #448ef6;
+            border-color: #448ef6;
+            &:after {
+              content: "";
+              position: absolute;
+              border-top: 5px solid #448ef6;
+              border-right: 7px solid transparent;
+              border-bottom: 5px solid transparent;
+              border-left: 7px solid transparent;
+              top: 100%;
+              right: 0;
+              left: 0;
+              width: 0px;
+              margin: auto;
+              transition: all 0.2s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+    .sidebar-box {
+      width: 33%;
+      flex-shrink: 0;
+      margin-left: 30px;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+footer {
+  background-color: #222831;
+  padding: 24px 0 !important;
+}
+.foot-con {
+  display: flex;
+  justify-content: space-between;
+}
+.foot-menu {
+  margin-bottom: 12px;
+  display: flex;
+  & > div {
+    margin-right: 16px;
+    color: #f2f2f5;
+    cursor: pointer;
+  }
+}
+.copyright {
+  color: #9ca0ad;
+}
+.links {
+  display: flex;
+  & > div {
+    background-color: #393e46;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    margin-left: 10px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    &.qq:hover {
+      background-color: #3d93e0;
+    }
+    &.wechat:hover {
+      background-color: #20b767;
+    }
+    & > i {
+      font-size: 20px;
+    }
+  }
+}
