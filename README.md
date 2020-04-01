@@ -2,6 +2,11 @@
 
 > power by nextjs
 
+# Related projects
+
+[bsus](https://github.com/baishiup/bsus)  
+[bsus-admin](https://github.com/baishiup/bsus-admin)
+
 # TODO
 
 - [ ] music
