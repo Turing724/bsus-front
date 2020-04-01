@@ -1,0 +1,111 @@
+#ArticleContent {
+  .breadcrumbs {
+    margin-bottom: 8px;
+    font-size: 12px;
+    .sep {
+      margin: 0 8px;
+      color: #9ca0ad;
+    }
+    .current {
+      color: #9ca0ad;
+    }
+    .href {
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .breadcrumbs {
+      display: none;
+    }
+  }
+  .row {
+    display: flex;
+    padding-bottom: 48px;
+  }
+  .sidebar {
+    width: 33%;
+    margin-left: 30px;
+  }
+  @media screen and (max-width: 992px) {
+    .sidebar {
+      display: none;
+    }
+  }
+  .main {
+    flex: 1;
+    .header {
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgb(242, 242, 245);
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        width: 8%;
+        height: 2px;
+        left: 0;
+        bottom: -1px;
+        background-color: #448ef6;
+      }
+      .category {
+        cursor: pointer;
+        display: inline-block;
+        padding: 3px 4px;
+        color: #fff;
+        background-color: #448ef6;
+        border-radius: 2px;
+        font-size: 12px;
+      }
+      h1 {
+        font-size: 28px;
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
+      time {
+        color: #9ca0ad;
+        font-size: 12px;
+      }
+    }
+    .related {
+      .columns-title {
+        margin: 16px 0;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        i {
+          color: #448ef6;
+          font-size: 22px;
+          margin-right: 8px;
+        }
+      }
+      .content {
+        li {
+          cursor: pointer;
+          padding-left: 16px;
+          position: relative;
+          transition: all 0.2s;
+          & + li {
+            margin-top: 8px;
+          }
+          &:before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 1px;
+            background-color: #448ef6;
+            top: 10px;
+            left: 0;
+            transition: all 0.3s;
+          }
+          &:hover {
+            padding-left: 24px;
+            color: #448ef6;
+            &:before {
+              width: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

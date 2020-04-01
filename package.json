@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 3001",
-    "build": "next build",
-    "start": "next start -p 3001"
+    "dev": "node script && next -p 3001",
+    "build": "node script &&next build",
+    "start": "node script &&next start -p 3001"
   },
   "keywords": [],
   "author": "",

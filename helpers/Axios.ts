@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
+import environment from "../environment";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = environment.host;
 
 axios.interceptors.request.use(request => {
   return request;
@@ -10,9 +11,14 @@ axios.interceptors.response.use(
   response => {
     return response;
   },
-  (error: AxiosError) => {
-    console.log(error);
-    return error.response.data;
+  (err: AxiosError) => {
+    if (err === undefined || err.code === "ECONNABORTED" || err.response === undefined) {
+      return Promise.reject(err);
+    }
+
+    const { response } = err;
+
+    return response;
   }
 );
 

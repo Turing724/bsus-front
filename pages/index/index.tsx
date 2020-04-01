@@ -1,5 +1,4 @@
-import Axios from "../../helpers/Axios";
-import { useRouter } from "next/router";
+import axios from "../../helpers/axios";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import SwiperPagination from "../../components/SwiperPagination";
@@ -12,26 +11,14 @@ import "./index.less";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-export async function getStaticProps() {
-  const articles = await Axios.get("/article");
-  const tags = await Axios.get("/tag");
-  const categorys = await Axios.get("/category");
-  return {
-    props: {
-      tags: tags.data,
-      categorys: categorys.data,
-      articles: articles.data,
-      bannerList: articles.data.list.filter((x, i) => i < 5)
-    }
-  };
-}
-
-export default ({ categorys, tags, articles, bannerList }) => {
-  const router = useRouter();
+const Index = ({ categorys, tags, articles, banners, err }) => {
+  if (err) {
+    console.log(err);
+  }
 
   const [bannerIndex, setBannerIndex] = useState(0);
   const [categoryId, setCategoryId] = useState<string | number>("");
-  const [articleList, setArticleList] = useState(articles.list);
+  const [articleList, setArticleList] = useState(articles);
 
   async function handleCategory(id) {
     setCategoryId(id);
@@ -42,13 +29,13 @@ export default ({ categorys, tags, articles, bannerList }) => {
     const req = {
       category: id
     };
-    const res = await Axios.get("/article", { params: req });
+    const res = await axios.get("/article", { params: req });
     setArticleList(res.data.list);
   }
   function detePass(date) {
     const t = (new Date().valueOf() - new Date(date).valueOf()) / 1000;
     if (t < 60) {
-      return t + "秒前";
+      return Math.floor(t) + "秒前";
     } else if (t < 60 * 60) {
       return Math.floor(t / 60) + "分钟前";
     } else if (t < 60 * 60 * 24) {
@@ -60,14 +47,14 @@ export default ({ categorys, tags, articles, bannerList }) => {
   return (
     <div id="Index">
       <div className="swiper">
-        <AutoPlaySwipeableViews interval={300000} index={bannerIndex} onChangeIndex={setBannerIndex} enableMouseEvents>
-          {bannerList.map((x, i) => (
+        <AutoPlaySwipeableViews interval={3000} index={bannerIndex} onChangeIndex={setBannerIndex} enableMouseEvents>
+          {banners.map((x, i) => (
             <div className="swiper-item" key={i}>
               <div className="pic">
-                <div style={{ backgroundImage: "url(/examplearticle.jpg)" }}></div>
+                <div style={{ backgroundImage: `url(${x.thumb})` }}></div>
               </div>
               <div className="content">
-                <Link href={`/article/${x.id}`}>
+                <Link as={`/article/${x.id}`} href="/article/[id]">
                   <h2>{x.title}</h2>
                 </Link>
                 <p>{x.description}</p>
@@ -80,7 +67,7 @@ export default ({ categorys, tags, articles, bannerList }) => {
             </div>
           ))}
         </AutoPlaySwipeableViews>
-        <SwiperPagination length={bannerList.length} index={bannerIndex} handleChangeIndex={setBannerIndex}></SwiperPagination>
+        <SwiperPagination length={banners.length} index={bannerIndex} handleChangeIndex={setBannerIndex}></SwiperPagination>
       </div>
 
       <div className="container">
@@ -89,10 +76,9 @@ export default ({ categorys, tags, articles, bannerList }) => {
             <div onClick={_ => handleCategory("")} className={`category-item ${categoryId === "" ? "active" : ""}`}>
               全部
             </div>
-            {categorys.list.map((x, i) => (
+            {categorys.map((x, i) => (
               <div onClick={_ => handleCategory(x.id)} className={`category-item ${categoryId === x.id ? "active" : ""}`} key={i}>
                 {x.name}
-                {x.id}
               </div>
             ))}
           </div>
@@ -103,9 +89,34 @@ export default ({ categorys, tags, articles, bannerList }) => {
           </div>
         </div>
         <div className="sidebar-box">
-          <SideBar tags={tags.list}></SideBar>
+          <SideBar tags={tags} categorys={categorys}></SideBar>
         </div>
       </div>
     </div>
   );
 };
+
+Index.getInitialProps = async function() {
+  const dataSource = {
+    articles: [],
+    tags: [],
+    categorys: [],
+    banners: [],
+    err: null
+  };
+  try {
+    let article = await axios.get("/article");
+    let tag = await axios.get("/tag");
+    let category = await axios.get("/category");
+    dataSource.articles = article.data.list;
+    dataSource.tags = tag.data.list;
+    dataSource.categorys = category.data.list;
+    dataSource.banners = article.data.list;
+    return dataSource;
+  } catch (error) {
+    dataSource.err = error;
+    return dataSource;
+  }
+};
+
+export default Index;

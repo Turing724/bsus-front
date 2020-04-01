@@ -2,6 +2,7 @@
   .swiper {
     width: 100%;
     position: relative;
+
     .swiper-item {
       height: 490px;
       background-color: #212731;
@@ -22,10 +23,6 @@
           background-color: #eee;
           background-position: center;
           background-size: cover;
-          &:hover {
-            transform: rotate(-2deg);
-            width: 105%;
-          }
         }
       }
       .content {
@@ -77,6 +74,48 @@
         }
       }
     }
+    @media screen and (max-width: 992px) {
+      .swiper-item {
+        height: 306px;
+        .content {
+          h2 {
+            margin-top: 38px;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .swiper-item {
+        flex-direction: column;
+        height: 430px;
+        .pic {
+          width: 100%;
+          flex: 1;
+        }
+        .content {
+          flex: none;
+          padding: 16px;
+          height: 83px;
+          width: 100%;
+          h2 {
+            margin: 0;
+            font-size: 15px;
+            margin-bottom: 8px;
+          }
+          p {
+            display: none;
+          }
+          .foot {
+            position: static;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 576px) {
+      .swiper-item {
+        height: 306px;
+      }
+    }
   }
   .container {
     padding: 24px 0 48px 0;
@@ -123,10 +162,16 @@
         }
       }
     }
+
     .sidebar-box {
-      width: 33%;
+      width: 28%;
       flex-shrink: 0;
       margin-left: 30px;
+    }
+    @media screen and (max-width: 992px) {
+      .sidebar-box {
+        display: none;
+      }
     }
   }
 }

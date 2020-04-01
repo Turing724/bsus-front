@@ -5,11 +5,11 @@ import Link from "next/link";
 export default ({ item }) => {
   return (
     <div id="ArticleItem">
-      <Link href={`/article/${item.id}`}>
-        <div className="thumb" style={{ backgroundImage: "url(/examplearticle.jpg)" }}></div>
+      <Link href="/article/[id]" as={`/article/${item.id}`}>
+        <div className="thumb" style={{ backgroundImage: `url(${item.thumb})` }}></div>
       </Link>
       <div className="article-item-content">
-        <Link href={`/article/${item.id}`}>
+        <Link href="/article/[id]" as={`/article/${item.id}`}>
           <h1>{item.title}</h1>
         </Link>
 
@@ -19,7 +19,7 @@ export default ({ item }) => {
             {item.category
               ? [
                   <i className="iconfont bsuscategory" key={0}></i>,
-                  <Link key={1} href={`/category/${item.category.id}`}>
+                  <Link key={1} href={`/article?category=${item.category.id}`}>
                     <span>{item.category.name}</span>
                   </Link>
                 ]
@@ -28,7 +28,7 @@ export default ({ item }) => {
               ? [
                   <i className="iconfont bsusCategoryanalysis" key={0}></i>,
                   item.tag.map((x, i) => (
-                    <Link key={i + 1} href={`/tag/${x.id}`}>
+                    <Link key={i + 1} href={`/article?tag=${x.id}`}>
                       <span>{x.name}</span>
                     </Link>
                   ))

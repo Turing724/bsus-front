@@ -32,9 +32,7 @@
   }
   .author-box {
     position: relative;
-    &:hover .avatar img {
-      animation: rotate 1s linear infinite;
-    }
+
     .head {
       background-color: #eee;
       background-position: center;
@@ -71,6 +69,9 @@
         border-radius: 100%;
         margin-top: 1px;
       }
+      &:hover img {
+        animation: rotate 1s linear infinite;
+      }
     }
     .body {
       margin-top: 30px;
@@ -85,12 +86,12 @@
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg);
+    transform: rotate3d(0, 1, 0, 0deg);
   }
   50% {
-    transform: rotate(180deg);
+    transform: rotate3d(0, 1, 0, 180deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate3d(0, 1, 0, 360deg);
   }
 }

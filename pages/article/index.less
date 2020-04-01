@@ -1,0 +1,55 @@
+#ArtList {
+  .breadcrumbs {
+    margin-bottom: 8px;
+    font-size: 12px;
+    .sep {
+      margin: 0 8px;
+      color: #9ca0ad;
+    }
+    .current {
+      color: #9ca0ad;
+    }
+    .href {
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .breadcrumbs {
+      display: none;
+    }
+  }
+  .main {
+    display: flex;
+    .content {
+      flex: 1;
+      .column {
+        height: 260px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        .info {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          color: #fff;
+          font-size: 50px;
+          padding: 24px;
+          box-sizing: border-box;
+          line-height: 1;
+          p:nth-child(2) {
+            font-size: 16px;
+            i {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
