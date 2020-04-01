@@ -14,6 +14,9 @@ export default () => {
           <div className="wechat">
             <i className="iconfont bsuswechat-fill"></i>
           </div>
+          <div className="git">
+            <i className="iconfont bsusgit"></i>
+          </div>
         </div>
       </div>
     </footer>

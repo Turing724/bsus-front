@@ -29,7 +29,7 @@ export default ({ item }) => {
                   <i className="iconfont bsusCategoryanalysis" key={0}></i>,
                   item.tag.map((x, i) => (
                     <Link key={i + 1} href={`/article?tag=${x.id}`}>
-                      <span>{x.name}</span>
+                      <span>#{x.name}</span>
                     </Link>
                   ))
                 ]

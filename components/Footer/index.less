@@ -23,14 +23,17 @@ footer {
     color: #fff;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
-    &.qq:hover {
-      background-color: #3d93e0;
-    }
-    &.wechat:hover {
-      background-color: #20b767;
-    }
     & > i {
       font-size: 20px;
     }
+  }
+  & > div:nth-child(3n):hover {
+    background-color: #eee;
+  }
+  & > div:nth-child(3n-1):hover {
+    background-color: #20b767;
+  }
+  & > div:nth-child(3n-2):hover {
+    background-color: #3d93e0;
   }
 }

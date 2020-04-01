@@ -17,21 +17,8 @@ const Index = ({ categorys, tags, articles, banners, err }) => {
   }
 
   const [bannerIndex, setBannerIndex] = useState(0);
-  const [categoryId, setCategoryId] = useState<string | number>("");
   const [articleList, setArticleList] = useState(articles);
 
-  async function handleCategory(id) {
-    setCategoryId(id);
-    getArticle(id);
-  }
-
-  async function getArticle(id = "") {
-    const req = {
-      category: id
-    };
-    const res = await axios.get("/article", { params: req });
-    setArticleList(res.data.list);
-  }
   function detePass(date) {
     const t = (new Date().valueOf() - new Date(date).valueOf()) / 1000;
     if (t < 60) {
@@ -72,16 +59,6 @@ const Index = ({ categorys, tags, articles, banners, err }) => {
 
       <div className="container">
         <div className="main">
-          <div className="category">
-            <div onClick={_ => handleCategory("")} className={`category-item ${categoryId === "" ? "active" : ""}`}>
-              全部
-            </div>
-            {categorys.map((x, i) => (
-              <div onClick={_ => handleCategory(x.id)} className={`category-item ${categoryId === x.id ? "active" : ""}`} key={i}>
-                {x.name}
-              </div>
-            ))}
-          </div>
           <div className="article">
             {articleList.map((article, i) => (
               <ArticleItem key={i} item={article}></ArticleItem>

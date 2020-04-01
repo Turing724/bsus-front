@@ -23,7 +23,7 @@
     padding-bottom: 48px;
   }
   .sidebar {
-    width: 33%;
+    width: 28%;
     margin-left: 30px;
   }
   @media screen and (max-width: 992px) {
@@ -33,6 +33,9 @@
   }
   .main {
     flex: 1;
+    .markdown-body * {
+      list-style: initial;
+    }
     .header {
       padding-bottom: 24px;
       margin-bottom: 24px;
@@ -47,7 +50,7 @@
         bottom: -1px;
         background-color: #448ef6;
       }
-      .category {
+      .tags {
         cursor: pointer;
         display: inline-block;
         padding: 3px 4px;
@@ -55,6 +58,7 @@
         background-color: #448ef6;
         border-radius: 2px;
         font-size: 12px;
+        margin-right: 6px;
       }
       h1 {
         font-size: 28px;

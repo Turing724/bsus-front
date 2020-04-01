@@ -7,7 +7,7 @@ import "../../styles/github-markdown.less";
 import "../../styles/highlight.github.less";
 import "./[id].less";
 
-const articleContent = ({ article, tags, relates }) => {
+const articleContent = ({ article, tags, relates, categorys }) => {
   return (
     <div id="ArticleContent">
       <div className="breadcrumbs">
@@ -32,13 +32,11 @@ const articleContent = ({ article, tags, relates }) => {
           <div className="card" style={{ padding: "20px" }}>
             <div className="header">
               <div>
-                {article.category ? (
-                  <Link href={`/article?category=${article.category.id}`}>
-                    <span className="category">#{article.category.name}#</span>
+                {article.tag.map((x, i) => (
+                  <Link href={`/article?tag=${x.id}`} key={i}>
+                    <span className="tags">#{x.name}</span>
                   </Link>
-                ) : (
-                  ""
-                )}
+                ))}
               </div>
               <h1>{article.title}</h1>
               <time>{dayjs(article.updatedAt).format("YYYY-MM-DD HH:mm")}</time>
@@ -65,7 +63,7 @@ const articleContent = ({ article, tags, relates }) => {
         </div>
 
         <div className="sidebar">
-          <SideBar tags={tags} categorys={[]}></SideBar>
+          <SideBar tags={tags} categorys={categorys}></SideBar>
         </div>
       </div>
     </div>
@@ -76,13 +74,14 @@ articleContent.getInitialProps = async function(context) {
   const id = context.query["id"];
   const res = await axios.get(`/article/${id}`);
   const tags = await axios.get("/tag");
+  const categorys = await axios.get("/category");
 
   let relates = [];
   if (res.data.map.tag.length) {
     let relatesdata = await axios.get(`/article?tag=${res.data.map.tag[0].id}`);
     relates = relatesdata.data.list.filter(x => x.id !== res.data.map.id);
   }
-  return { article: res.data.map, tags: tags.data.list, relates, categorys: [] };
+  return { article: res.data.map, tags: tags.data.list, relates, categorys: categorys.data.list };
 };
 
 export default articleContent;

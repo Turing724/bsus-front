@@ -4,22 +4,44 @@ import Link from "next/link";
 import ArticleItem from "../../components/ArticleItem";
 
 import "./index.less";
+import { ReactElement } from "react";
 
-const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags }) => {
-  const column = categoryInfo ? (
-    <div className="column" style={{ backgroundImage: `url(${categoryInfo.thumb})` }}>
-      <div className="info">
-        <p>{categoryInfo.name}</p>
-        <p>
-          <i className="iconfont bsuscategory"></i>
-          {articles.length}篇
-        </p>
+const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags, query }) => {
+  let column: string | ReactElement = "";
+  if (query.category && categoryInfo) {
+    column = (
+      <div className="column" style={{ backgroundImage: `url(${categoryInfo.thumb})` }}>
+        <div className="info">
+          <p>{categoryInfo.name}</p>
+          <p>
+            <i className="iconfont bsuscategory"></i>
+            {articles.length}篇
+          </p>
+        </div>
       </div>
-    </div>
-  ) : (
-    ""
-  );
+    );
+  } else if (query.tag && tagInfo) {
+    column = (
+      <div className="column" style={{ backgroundImage: `url(${tagInfo.thumb})` }}>
+        <div className="info">
+          <p>#{tagInfo.name}</p>
+          <p>
+            <i className="iconfont bsuscategory"></i>
+            {articles.length}篇
+          </p>
+        </div>
+      </div>
+    );
+  }
 
+  let breadcrumbsCurrent: string | ReactElement = "";
+  if (query.category && categoryInfo) {
+    breadcrumbsCurrent = <span className="current">分类：{categoryInfo.name}</span>;
+  } else if (query.tag && tagInfo) {
+    breadcrumbsCurrent = <span className="current">#{tagInfo.name}</span>;
+  } else {
+    breadcrumbsCurrent = <span className="current">文章列表</span>;
+  }
   return (
     <div id="ArtList">
       <div className="breadcrumbs">
@@ -27,7 +49,7 @@ const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags }) => {
           <span className="href">我的主页</span>
         </Link>
         <span className="sep">›</span>
-        {/* <span className="current">{categoryInfo.name}</span> */}
+        {breadcrumbsCurrent}
       </div>
       <div className="main">
         <div className="content">
@@ -36,7 +58,7 @@ const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags }) => {
             <ArticleItem item={x} key={i}></ArticleItem>
           ))}
         </div>
-        <div style={{ marginLeft: "30px", width: "33%" }}>
+        <div className="sidebar">
           <SideBar tags={tags} categorys={categorys}></SideBar>
         </div>
       </div>
@@ -51,7 +73,8 @@ ArtList.getInitialProps = async context => {
     categoryInfo: null,
     tagInfo: null,
     tags: [],
-    categorys: []
+    categorys: [],
+    query
   };
   const params = [];
 
@@ -64,8 +87,7 @@ ArtList.getInitialProps = async context => {
   if (query.tag) {
     params.push(`tag=${query.tag}`);
     const tagInfo = await axios.get(`/tag/${query.tag}`);
-    console.log(tagInfo.data);
-    dataSource.tags = tagInfo.data.map;
+    dataSource.tagInfo = tagInfo.data.map;
   }
 
   const tag = await axios.get("/tag");
