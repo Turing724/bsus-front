@@ -6,7 +6,5 @@ const environment = `// 构建时生成
 export default{
     host:'${args.host || "http://localhost:3000"}'
 }`;
-console.log(args);
-console.log(environment);
 
 fs.writeFileSync(path.resolve(__dirname, "../environment.ts"), environment);

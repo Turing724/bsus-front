@@ -9,6 +9,7 @@
 
 # TODO
 
+- [ ] 站点信息 meta keywords
 - [ ] music
 - [ ] about
 - [ ] search

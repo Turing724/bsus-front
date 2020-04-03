@@ -2,11 +2,11 @@ import axios from "../../helpers/axios";
 import SideBar from "../../components/SideBar";
 import Link from "next/link";
 import ArticleItem from "../../components/ArticleItem";
-
 import "./index.less";
 import { ReactElement } from "react";
+import WebHead from "../../components/WebHead";
 
-const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags, query }) => {
+const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags, query, setting }) => {
   let column: string | ReactElement = "";
   if (query.category && categoryInfo) {
     column = (
@@ -44,6 +44,7 @@ const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags, query }) =>
   }
   return (
     <div id="ArtList">
+      <WebHead title="文章列表" setting={setting}></WebHead>
       <div className="breadcrumbs">
         <Link href="/">
           <span className="href">我的主页</span>
@@ -59,7 +60,7 @@ const ArtList = ({ articles, categoryInfo, tagInfo, categorys, tags, query }) =>
           ))}
         </div>
         <div className="sidebar">
-          <SideBar tags={tags} categorys={categorys}></SideBar>
+          <SideBar tags={tags} categorys={categorys} avatar={setting.avatar}></SideBar>
         </div>
       </div>
     </div>
@@ -74,7 +75,8 @@ ArtList.getInitialProps = async context => {
     tagInfo: null,
     tags: [],
     categorys: [],
-    query
+    query,
+    setting: {}
   };
   const params = [];
 
@@ -82,7 +84,6 @@ ArtList.getInitialProps = async context => {
     params.push(`category=${query.category}`);
     const categoryInfo = await axios.get(`/category/${query.category}`);
     dataSource.categoryInfo = categoryInfo.data.map;
-    console.log(categoryInfo);
   }
   if (query.tag) {
     params.push(`tag=${query.tag}`);
@@ -93,10 +94,12 @@ ArtList.getInitialProps = async context => {
   const tag = await axios.get("/tag");
   const category = await axios.get("/category");
   const arts = await axios.get(`/article?${params.join("&")}`);
+  const setting = await axios.get("/setting");
 
   dataSource.tags = tag.data.list;
   dataSource.categorys = category.data.list;
   dataSource.articles = arts.data.list;
+  dataSource.setting = setting.data.map;
 
   return dataSource;
 };

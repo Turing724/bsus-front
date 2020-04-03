@@ -1,8 +1,8 @@
 import axios from "../../helpers/axios";
 import "./index.less";
+import WebHead from "../../components/WebHead";
 
-const project = ({ repos }) => {
-  console.log(repos);
+const project = ({ repos, setting }) => {
   function detePass(date) {
     const t = (new Date().valueOf() - new Date(date).valueOf()) / 1000;
     if (t < 60) {
@@ -17,6 +17,7 @@ const project = ({ repos }) => {
   }
   return (
     <div id="Project">
+      <WebHead title="项目" setting={setting}></WebHead>
       <h1>Project</h1>
       <div className="row">
         {repos.map((x, i) => (
@@ -39,7 +40,8 @@ const project = ({ repos }) => {
 
 project.getInitialProps = async () => {
   const repos = await axios.get("/github/getRepos");
-  return { repos: repos.data.list.sort((a, b) => new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf()) };
+  const setting = await axios.get("/setting");
+  return { setting: setting.data.map, repos: repos.data.list.sort((a, b) => new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf()) };
 };
 
 export default project;

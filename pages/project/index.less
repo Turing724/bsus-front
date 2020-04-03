@@ -3,6 +3,11 @@
     font-size: 32px;
     margin-bottom: 20px;
   }
+  @media screen and (max-width: 576px) {
+    .row {
+      column-count: 1 !important;
+    }
+  }
   .row {
     column-count: 2;
     .item {
@@ -13,8 +18,7 @@
       padding: 20px;
       box-sizing: border-box;
       cursor: pointer;
-      &:hover {
-      }
+
       .name {
         display: flex;
         align-items: center;

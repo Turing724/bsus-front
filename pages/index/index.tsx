@@ -5,19 +5,20 @@ import SwiperPagination from "../../components/SwiperPagination";
 import SideBar from "../../components/SideBar";
 import Link from "next/link";
 import ArticleItem from "../../components/ArticleItem";
+import WebHead from "../../components/WebHead";
 
 import { useState } from "react";
 import "./index.less";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const Index = ({ categorys, tags, articles, banners, err }) => {
+const Index = ({ categorys, tags, articles, banners, setting, err }) => {
   if (err) {
     console.log(err);
   }
+  const { avatar, sitename, keywords, description } = setting;
 
   const [bannerIndex, setBannerIndex] = useState(0);
-  const [articleList, setArticleList] = useState(articles);
 
   function detePass(date) {
     const t = (new Date().valueOf() - new Date(date).valueOf()) / 1000;
@@ -33,8 +34,10 @@ const Index = ({ categorys, tags, articles, banners, err }) => {
   }
   return (
     <div id="Index">
+      <WebHead title="baishiup's website" setting={setting}></WebHead>
+
       <div className="swiper">
-        <AutoPlaySwipeableViews interval={3000} index={bannerIndex} onChangeIndex={setBannerIndex} enableMouseEvents>
+        <AutoPlaySwipeableViews interval={3000} index={bannerIndex | 0} onChangeIndex={setBannerIndex} enableMouseEvents>
           {banners.map((x, i) => (
             <div className="swiper-item" key={i}>
               <div className="pic">
@@ -60,13 +63,13 @@ const Index = ({ categorys, tags, articles, banners, err }) => {
       <div className="container">
         <div className="main">
           <div className="article">
-            {articleList.map((article, i) => (
+            {articles.map((article, i) => (
               <ArticleItem key={i} item={article}></ArticleItem>
             ))}
           </div>
         </div>
         <div className="sidebar-box">
-          <SideBar tags={tags} categorys={categorys}></SideBar>
+          <SideBar tags={tags} categorys={categorys} avatar={avatar}></SideBar>
         </div>
       </div>
     </div>
@@ -79,16 +82,19 @@ Index.getInitialProps = async function() {
     tags: [],
     categorys: [],
     banners: [],
+    setting: {},
     err: null
   };
   try {
     let article = await axios.get("/article");
     let tag = await axios.get("/tag");
     let category = await axios.get("/category");
+    let setting = await axios.get("/setting");
     dataSource.articles = article.data.list;
     dataSource.tags = tag.data.list;
     dataSource.categorys = category.data.list;
     dataSource.banners = article.data.list;
+    dataSource.setting = setting.data.map;
     return dataSource;
   } catch (error) {
     dataSource.err = error;

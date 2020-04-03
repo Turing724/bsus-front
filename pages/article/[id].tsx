@@ -2,14 +2,17 @@ import axios from "../../helpers/axios";
 import Link from "next/link";
 import SideBar from "../../components/SideBar";
 import dayjs from "dayjs";
+import WebHead from "../../components/WebHead";
 
 import "../../styles/github-markdown.less";
 import "../../styles/highlight.github.less";
 import "./[id].less";
 
-const articleContent = ({ article, tags, relates, categorys }) => {
+const articleContent = ({ article, tags, relates, categorys, setting }) => {
   return (
     <div id="ArticleContent">
+      <WebHead title={article.title} setting={{ ...setting, keywords: article.keywords, description: article.description }}></WebHead>
+
       <div className="breadcrumbs">
         <Link href="/">
           <span className="href">我的主页</span>
@@ -63,7 +66,7 @@ const articleContent = ({ article, tags, relates, categorys }) => {
         </div>
 
         <div className="sidebar">
-          <SideBar tags={tags} categorys={categorys}></SideBar>
+          <SideBar tags={tags} categorys={categorys} avatar={setting.avatar}></SideBar>
         </div>
       </div>
     </div>
@@ -75,13 +78,14 @@ articleContent.getInitialProps = async function(context) {
   const res = await axios.get(`/article/${id}`);
   const tags = await axios.get("/tag");
   const categorys = await axios.get("/category");
+  const setting = await axios.get("/setting");
 
   let relates = [];
   if (res.data.map.tag.length) {
     let relatesdata = await axios.get(`/article?tag=${res.data.map.tag[0].id}`);
     relates = relatesdata.data.list.filter(x => x.id !== res.data.map.id);
   }
-  return { article: res.data.map, tags: tags.data.list, relates, categorys: categorys.data.list };
+  return { article: res.data.map, tags: tags.data.list, relates, categorys: categorys.data.list, setting: setting.data.map };
 };
 
 export default articleContent;

@@ -2,7 +2,7 @@ import "./index.less";
 import dayjs from "dayjs";
 import Link from "next/link";
 
-export default ({ tags, categorys }) => {
+export default ({ tags, categorys, avatar }) => {
   return (
     <div id="sidebar">
       <div className="sidebar-item card author-box">
@@ -11,7 +11,7 @@ export default ({ tags, categorys }) => {
           <p>{dayjs().format("MM月,YYYY")}</p>
         </div>
         <div className="avatar">
-          <img src="/avatar.png" alt="" />
+          <img src={avatar || "/avatar.png"} alt="" />
         </div>
         <div className="body">
           <p className="name">Baishiup</p>
