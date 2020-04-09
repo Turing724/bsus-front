@@ -9,8 +9,7 @@
 
 # TODO
 
-- [ ] 站点信息 meta keywords
-- [ ] music
+- [ ] music(QQ 音乐 qmplayer 存在证书问题)
 - [ ] about
 - [ ] search
 

@@ -16,7 +16,7 @@ const Index = ({ categorys, tags, articles, banners, setting, err }) => {
   if (err) {
     console.log(err);
   }
-  const { avatar, sitename, keywords, description } = setting;
+  const { avatar } = setting;
 
   const [bannerIndex, setBannerIndex] = useState(0);
 
@@ -36,32 +36,36 @@ const Index = ({ categorys, tags, articles, banners, setting, err }) => {
     <div id="Index">
       <WebHead title="baishiup's website" setting={setting}></WebHead>
 
-      <div className="swiper">
-        <AutoPlaySwipeableViews interval={3000} index={bannerIndex | 0} onChangeIndex={setBannerIndex} enableMouseEvents>
-          {banners.map((x, i) => (
-            <div className="swiper-item" key={i}>
-              <div className="pic">
-                <div style={{ backgroundImage: `url(${x.thumb})` }}></div>
-              </div>
-              <div className="content">
-                <Link as={`/article/${x.id}`} href="/article/[id]">
-                  <h2>{x.title}</h2>
-                </Link>
-                <p>{x.description}</p>
-                <div className="foot">
-                  <span>{x.category.name}</span>
-                  <i className="separator"></i>
-                  <span>{detePass(x.updatedAt)}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-        <SwiperPagination length={banners.length} index={bannerIndex} handleChangeIndex={setBannerIndex}></SwiperPagination>
-      </div>
-
       <div className="container">
         <div className="main">
+          <div className="swiper">
+            <AutoPlaySwipeableViews interval={3000} index={bannerIndex | 0} onChangeIndex={setBannerIndex} enableMouseEvents>
+              {banners.map((x, i) => (
+                <div className="swiper-item" key={i}>
+                  <Link as={`/article/${x.id}`} href="/article/[id]">
+                    <div className="pic">
+                      <div style={{ backgroundImage: `url(${x.thumb})` }}></div>
+                    </div>
+                  </Link>
+
+                  <div className="content">
+                    <Link as={`/article/${x.id}`} href="/article/[id]">
+                      <h2>{x.title}</h2>
+                    </Link>
+                    <p>{x.description}</p>
+                    <div className="foot">
+                      <Link href={`/article?category=${x.category.id}`}>
+                        <span className="categoryname">{x.category.name}</span>
+                      </Link>
+                      <i className="separator"></i>
+                      <span>{detePass(x.updatedAt)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </AutoPlaySwipeableViews>
+            <SwiperPagination length={banners.length} index={bannerIndex} handleChangeIndex={setBannerIndex}></SwiperPagination>
+          </div>
           <div className="article">
             {articles.map((article, i) => (
               <ArticleItem key={i} item={article}></ArticleItem>
@@ -76,14 +80,14 @@ const Index = ({ categorys, tags, articles, banners, setting, err }) => {
   );
 };
 
-Index.getInitialProps = async function() {
+Index.getInitialProps = async function () {
   const dataSource = {
     articles: [],
     tags: [],
     categorys: [],
     banners: [],
     setting: {},
-    err: null
+    err: null,
   };
   try {
     let article = await axios.get("/article");
@@ -95,6 +99,7 @@ Index.getInitialProps = async function() {
     dataSource.categorys = category.data.list;
     dataSource.banners = article.data.list;
     dataSource.setting = setting.data.map;
+
     return dataSource;
   } catch (error) {
     dataSource.err = error;
