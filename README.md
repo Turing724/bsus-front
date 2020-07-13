@@ -9,7 +9,6 @@
 
 # TODO
 
-- [ ] music(QQ 音乐 qmplayer 存在证书问题)
 - [ ] about
 - [ ] search
 

@@ -1,12 +1,6 @@
 import "./index.less";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import Head from "next/head";
-import axios from "../../helpers/axios";
-
-declare class QMplayer {
-  play(musicId: string): void;
-}
 
 export default () => {
   const [collapse, setCollapse] = useState(true);
@@ -15,36 +9,8 @@ export default () => {
   }, [collapse]);
   useEffect(() => {}, []);
 
-  const [qqPlayer, setqqPlayer] = useState<QMplayer | null>(null);
-  const [musicList, setMusicList] = useState([]);
-  const [canPlayList, setCanPlayList] = useState([]);
-
-  useEffect(() => {
-    getMusicList();
-    setqqPlayer(new QMplayer());
-  }, []);
-  useEffect(() => {
-    if (qqPlayer !== null && canPlayList.length) {
-      musicPlay();
-    }
-  }, [qqPlayer, canPlayList]);
-
-  async function getMusicList() {
-    let list = await axios.get("/qqmusic/getList");
-    setMusicList(list.data.list);
-    setCanPlayList(list.data.list.filter((x) => x.pay_play === 0));
-  }
-  function musicPlay() {
-    let index = Math.round(Math.random() * canPlayList.length);
-    qqPlayer.play(canPlayList[index]["mid"]);
-  }
-
   return (
     <div>
-      {/* qq音乐播放器 */}
-      <Head>
-        <script src="//y.gtimg.cn/music/h5/player/player.js?max_age=2592000"></script>
-      </Head>
       <header>
         <div className="wrapper">
           <div className="nav-toggler" onClick={(_) => setCollapse(false)}>

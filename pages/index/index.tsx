@@ -9,7 +9,6 @@ import WebHead from "../../components/WebHead";
 
 import { useState } from "react";
 import "./index.less";
-
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const Index = ({ categorys, tags, articles, banners, setting, err }) => {
@@ -97,7 +96,7 @@ Index.getInitialProps = async function () {
     dataSource.articles = article.data.list;
     dataSource.tags = tag.data.list;
     dataSource.categorys = category.data.list;
-    dataSource.banners = article.data.list;
+    dataSource.banners = article.data.list.filter((x, i) => i < 4);
     dataSource.setting = setting.data.map;
 
     return dataSource;
